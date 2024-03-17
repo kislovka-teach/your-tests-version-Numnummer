@@ -1,0 +1,15 @@
+﻿using DataAccess.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Domain.Abstractions.Repository
+{
+    public interface IProductRepository : IRepository
+    {
+        Task AddProductAsync(Product product);
+        Task<Product[]> GetProductsByCategoryAsync(int categoryId);
+    }
+}
