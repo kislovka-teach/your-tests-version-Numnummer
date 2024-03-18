@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Abstractions
+namespace Domain.Abstractions.Repositories
 {
-    public interface IRepository
+    public interface ITrainingRepository : IRepository
     {
-        Task SaveChangesAsync();
+        Task<Training?> GetTrainingByIdAsync(int id);
     }
 }

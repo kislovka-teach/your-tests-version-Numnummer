@@ -1,4 +1,5 @@
 ﻿using Domain.Abstractions;
+using Domain.Abstractions.Repositories;
 using Repository.Models;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace Domain.Services
 {
     public class ReviewService(IUserService userService,
-        IRepository repository, ITrainingService trainingService) : IReviewService
+        IReviewRepository reviewRepository, ITrainingService trainingService) : IReviewService
     {
         private static int _reviewIndex = 1;
 
@@ -17,14 +18,14 @@ namespace Domain.Services
         {
             var user = await userService.GetUserByLoginAsync(userLogin);
             var training = await trainingService.GetTrainingByIdAsync(trainingId);
-            await repository.AddReviewAsync(user, training, review, _reviewIndex);
-            await repository.SaveChangesAsync();
+            await reviewRepository.AddReviewAsync(user, training, review, _reviewIndex);
+            await reviewRepository.SaveChangesAsync();
             _reviewIndex++;
         }
 
         public async Task<Review[]> GetAllReviewsForTrainingAsync(int trainingId)
         {
-            return await repository.GetAllReviewsForTrainingAsync(trainingId);
+            return await reviewRepository.GetAllReviewsForTrainingAsync(trainingId);
         }
     }
 }

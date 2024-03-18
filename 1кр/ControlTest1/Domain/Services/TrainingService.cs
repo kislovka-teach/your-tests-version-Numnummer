@@ -1,27 +1,18 @@
 ﻿using Domain.Abstractions;
-using Domain.Repository;
+using Domain.Abstractions.Repositories;
 using Repository.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Services
 {
-    public class TrainingService : ITrainingService
+    public class TrainingService(IExcerciseRepository excerciseRepository,
+        ITrainingRepository trainingRepository) : ITrainingService
     {
-        private readonly IRepository _repository;
-        public TrainingService(IRepository repository)
-        {
-            _repository = repository;
-        }
 
         public async Task AddExcerciseToTrainingAsync(Excercise excercise, int id)
         {
-            await _repository.AddExcerciseAsync(excercise);
-            await _repository.AddExcerciseToTrainingAsync(excercise, id);
-            await _repository.SaveChangesAsync();
+            await excerciseRepository.AddExcerciseAsync(excercise);
+            await excerciseRepository.AddExcerciseToTrainingAsync(excercise, id);
+            await excerciseRepository.SaveChangesAsync();
         }
 
         public Excercise GetRandomExcercise()
@@ -42,7 +33,7 @@ namespace Domain.Services
 
         public async Task<Training?> GetTrainingByIdAsync(int id)
         {
-            return await _repository.GetTrainingByIdAsync(id);
+            return await trainingRepository.GetTrainingByIdAsync(id);
         }
     }
 }

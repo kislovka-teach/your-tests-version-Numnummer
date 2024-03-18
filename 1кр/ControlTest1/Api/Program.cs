@@ -1,6 +1,5 @@
+using Api.Extentions;
 using Domain.Abstractions;
-using Domain.Repository;
-using Domain.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -13,10 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnection")));
-builder.Services.AddScoped<IRepository, Domain.Repository.Repository>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<ITrainingService, TrainingService>();
-builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddRepositories();
+builder.Services.AddServices();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options => options.AccessDeniedPath="/loginError");
 var app = builder.Build();

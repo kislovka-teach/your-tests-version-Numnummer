@@ -1,4 +1,5 @@
 ﻿using Domain.Abstractions;
+using Domain.Abstractions.Repositories;
 using Repository.Models;
 using System;
 using System.Collections.Generic;
@@ -9,22 +10,17 @@ using System.Threading.Tasks;
 
 namespace Domain.Services
 {
-    public class UserService : IUserService
+    public class UserService(IUserRepositiry userRepositiry) : IUserService
     {
-        private readonly IRepository _repository;
-        public UserService(IRepository repository)
-        {
-            _repository=repository;
-        }
 
         public async Task<User?> GetUserByLoginAsync(string login)
         {
-            return await _repository.FindUserByLoginAsync(login);
+            return await userRepositiry.FindUserByLoginAsync(login);
         }
 
         public async Task<ClaimsPrincipal?> GetUserPrincipalAsync(User user)
         {
-            var foundedUser = await _repository.FindUserAsync(user.Login, user.Password);
+            var foundedUser = await userRepositiry.FindUserAsync(user.Login, user.Password);
             if (foundedUser==null)
             {
                 return null;

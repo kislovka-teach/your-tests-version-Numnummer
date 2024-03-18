@@ -10,12 +10,11 @@ namespace Api.Controllers
     {
         private readonly ITrainingService _trainingService;
         private readonly IReviewService _reviewService;
-        private readonly IUserService _userService;
-        public TrainingController(ITrainingService trainingService, IReviewService reviewService, IUserService userService)
+
+        public TrainingController(ITrainingService trainingService, IReviewService reviewService)
         {
             _trainingService = trainingService;
             _reviewService=reviewService;
-            _userService=userService;
         }
 
         [HttpGet("training/{id}")]
