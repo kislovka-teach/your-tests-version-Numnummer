@@ -31,6 +31,7 @@ namespace DataAccess.Configurations
                     Role="admin"
                 }
             };
+            builder.HasData(users);
         }
     }
 }

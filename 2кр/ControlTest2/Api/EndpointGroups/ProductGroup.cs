@@ -11,7 +11,7 @@ namespace Api.EndpointGroups
     {
         public static RouteGroupBuilder ProductGroupe(this RouteGroupBuilder builder)
         {
-            builder.MapPost("/{id}/add",
+            builder.MapPost("/add",
                 [Authorize(Roles = "admin")] async ([FromServices] IProductRepository productRepository,
                 [FromServices] IProductService productService) =>
             {

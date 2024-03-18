@@ -19,6 +19,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer();
+builder.Services.AddAuthorization();
 
 builder.Services.AddAutoMapper(mapper => mapper.AddProfile<AppMapProfile>());
 var app = builder.Build();
